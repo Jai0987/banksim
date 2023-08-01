@@ -1,0 +1,12 @@
+# Use the official PostgreSQL image as the base image
+FROM postgres:15
+
+# Set environment variables for PostgreSQL user and password
+ENV POSTGRES_USER=jaikash12
+ENV POSTGRES_PASSWORD=jaikash12
+
+# Create a directory for the SQL dump file
+RUN mkdir /docker-entrypoint-initdb.d
+
+# Copy the SQL dump file into the Docker container
+COPY ginauth_backup.sql /docker-entrypoint-initdb.d/

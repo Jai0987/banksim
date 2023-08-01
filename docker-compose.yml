@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+# docker run -it --rm --name cnse-idp -p 1234:1234 architectingsoftware/cnse-idp
+  idp:
+    image: architectingsoftware/cnse-idp:latest
+    container_name: cnseidp
+    restart: always
+    ports:
+      - '1234:1234'
+    environment:
+      - IDP_HOST=idp
+      - IDP_CONFIG=/etc/idp/idp-cfg.json
+    volumes:
+      - ./idp/idp-data:/etc/idp
+  banksim-api:
+    image: jaixkash876/ginauth:latest
+    container_name: banksim
+    restart: always
+    environment:
+      - IDP_URL=http://idp:1234
+      - DATABASE_URL=postgres://apiuser:apipass@banksim-db/banksim?sslmode=disable
+    ports:
+      - '9999:9999'
+    depends_on:
+      - idp
+      - banksim-db
+  banksim-db:
+    image: postgres
+    container_name: banksimdb
+    restart: on-failure
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: banksim
+      POSTGRES_USER: apiuser
+      POSTGRES_PASSWORD: apipass
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./db/db-setup:/tmp/db-setup
+volumes:
+  db-data:
