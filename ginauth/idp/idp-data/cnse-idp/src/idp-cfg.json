@@ -1,0 +1,45 @@
+[
+    {
+        "subject" : "s4",
+        "account" : {
+            "id": "12ab",
+            "group": "*",
+            "role" : "user-super"
+        }
+    },
+    {
+        "client_id" : "c1",
+        "client_secret" : "s1",
+        "account" : {
+            "id": 1234,
+            "group": "*",
+            "role" : "customer-premium"
+        }
+    },
+    {
+        "client_id" : "c2",
+        "client_secret" : "s2",
+        "account" : {
+            "id": 5678,
+            "group": "*",
+            "role" : "customer-basic"
+        }
+    },
+    {
+        "subject" : "s1",
+        "account" : {
+            "id": 5678,
+            "group": "*",
+            "role" : "user-basic"
+        }
+    },
+    {
+        "subject" : "s2",
+        "account" : {
+            "id": 1234,
+            "group": "*",
+            "role" : "user-admin"
+        }
+    }
+
+]

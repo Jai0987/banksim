@@ -1,0 +1,14 @@
+# syntax=docker/dockerfile:1
+
+FROM node:alpine
+ENV NODE_ENV=production
+ENV IDP_CONFIG=/app/dist/idp-cfg.json
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm install --production
+
+
+CMD ["node", "./dist/idp.js"]
