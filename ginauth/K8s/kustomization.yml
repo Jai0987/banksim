@@ -1,9 +1,0 @@
-secretGenerator:
-- name: psql-pass
-  namespace: banksim
-  literals:
-  - password=pswd123
-resources:
-  - postgres.yaml
-  - namespace.yaml
-  - idp.yaml
