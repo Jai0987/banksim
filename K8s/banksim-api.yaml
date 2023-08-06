@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: banksim-api-svc
+  labels:
+    app: banksim-api
+  namespace: banksim
+spec:
+  ports:
+    - port: 9999
+  selector:
+    app: banksim-api
+    tier: frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banksim-api-svc
+  labels:
+    app: banksim-api
+  namespace: banksim
+spec:
+  selector:
+    matchLabels:
+      app: banksim-api
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: banksim-api
+        tier: frontend
+      namespace: banksim
+    spec:
+      hostname: idp
+      containers:
+      - image: jaixkash876/ginauth:latest
+        name: banksim-api
+        env:
+         - name: IDP_URL
+           value: http://idp-svc:1234
+         - name: DATABASE_URL
+           value: postgres://apiuser:apipass@api-db-svc:5432/banksim?sslmode=disable
+        ports:
+        - containerPort: 9999
+          name: banksim-api
+        resources:
+            limits:
+              cpu: '500m'
+              memory: '100Mi'
