@@ -1,0 +1,48 @@
+# kind: PersistentVolume
+# apiVersion: v1
+# metadata:
+#   name: db-pv
+#   namespace: cnse
+# spec:
+#   capacity:
+#     storage: 256M
+#   accessModes:
+#     - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Retain
+#   storageClassName: local-storage
+#   local:
+#     path: /tmp/data
+#   nodeAffinity:
+#     required:
+#       nodeSelectorTerms:
+#       - matchExpressions:
+#         - key: kubernetes.io/hostname
+#           operator: In
+#           values:
+#           - cnse-control-plane
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: db-pv
+  namespace: banksim
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 256M
+  hostPath:
+    path: /tmp/db-data/
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: db-pvc
+  namespace: banksim
+spec:
+  volumeName: db-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256M

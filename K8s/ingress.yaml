@@ -1,0 +1,91 @@
+# # apiVersion: networking.k8s.io/v1
+# # kind: Ingress
+# # metadata:
+# #   name: bankapp-ingress
+# #   annotations:
+# #     nginx.ingress.kubernetes.io/rewrite-target: /$2
+# #   namespace: banksim
+# # spec:
+# #   rules:
+# #   - http:
+# #       paths:
+# #       - pathType: ImplementationSpecific
+# #         path: '/idp(/|$)(.*)'
+# #         backend:
+# #           service:
+# #             name: idp-svc
+# #             port:
+# #               number: 1234
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: cnse-ingress
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /$2
+#   namespace: banksim
+# spec:
+#   rules:
+#   - host: idp.cnse.com
+#     http:
+#       paths:
+#       - pathType: ImplementationSpecific
+#         path: /idp(/|$)(.*)
+#         backend:
+#           service:
+#             name: idp-svc
+#             port:
+#               number: 1234
+#   - http:
+#       paths:
+#       - pathType: ImplementationSpecific
+#         path: /idp2(/|$)(.*)
+#         backend:
+#           service:
+#             name: idp-svc
+#             port:
+#               number: 1234
+#       - pathType: ImplementationSpecific
+#         path: /api(/|$)(.*)
+#         backend:
+#           service:
+#             name: banksim-api-svc
+#             port:
+#               number: 9999
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cnse-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  namespace: banksim
+spec:
+  rules:
+  - host: idp.cnse.com
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        path: /idp(/|$)(.*)
+        backend:
+          service:
+            name: idp-svc
+            port:
+              number: 1234
+  - http:
+      paths:
+      - pathType: ImplementationSpecific
+        path: /idp2(/|$)(.*)
+        backend:
+          service:
+            name: idp-svc
+            port:
+              number: 1234
+      - pathType: ImplementationSpecific
+        path: /api(/|$)(.*)
+        backend:
+          service:
+            name: banksim-api-svc
+            port:
+              number: 9999
+ 

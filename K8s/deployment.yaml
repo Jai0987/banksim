@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ginauth-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ginauth
+  template:
+    metadata:
+      labels:
+        app: ginauth
+    spec:
+      containers:
+        - name: ginauth-container
+          image: localhost:9999/ginauth
+          ports:
+            - containerPort: 9999
+          env:
+            - name: DB_CONNECTION_STRING
+              value: "postgres://jaikash12:jaikash12@localhost/ginauth?sslmode=disable"
+          resources:
+            limits:
+              cpu: "0.5" # CPU limit for the container
+              memory: "512Mi"  # Memory limit for the container
